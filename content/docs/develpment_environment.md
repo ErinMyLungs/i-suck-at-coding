@@ -118,6 +118,22 @@ Funny story - when commiting these examples to github pylint auto-flagged exec a
 
 ## A More Complex Example
 
+We have a project involving making an old-school digital clock style display and we're we're trying to get it to render numbers that look like:
+
+![A digital number 8](/more_complex_target.png)
+
+We have created a 'Number' class and created a method called `draw_line` that lets us draw the shape on the canvas in the proper orientation but now that we can draw the shapes, we use the methods from above to play with this code and find coordinates to draw an 8.
+
+The full code is annotated below, you can pretty much run it as is and it'll put you into a live console that you can start playing with the display.
+
+{{<hint info>}}
+
+**Code-Style**
+
+I tend to use classes and object-oriented programming methods. You can use whatever style suites you. I mostly use classes as a way to bundle all the methods and state together but you can replace the attributes in `__init__` with `c.set_data/c.get_data` calls and tear out the self from all function definitions.
+
+{{</hint>}}
+
 
 {{<expand "Annotated Code">}}
 ```python
@@ -160,7 +176,7 @@ class Number:
         c.clear_drawing(self.name)
 
     # Feel free to skip the messy code below, this draws a polygon.
-    def regular_line(
+    def draw_line(
             self,
             x_offset=0,
             y_offset=0,

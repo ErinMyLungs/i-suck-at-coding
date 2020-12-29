@@ -21,7 +21,7 @@ We will do this like this:
    * Steps to apply this to a real project
    * Example code that can be executed and played with live
 
-Feel free to skip the more complex example if it doesn't look helpful, everything critical is shown [here]({{<relref "development_environment.md#code">}} "Code link")
+Feel free to skip the more complex example if it doesn't look helpful, everything critical is shown [here]({{<relref "development_environment.md#code">}} "Code link").
 
 ## Live Code Execution
 

@@ -1,0 +1,7 @@
+baseURL = "http://isuckatcoding.net/"
+languageCode = "en-us"
+title = "I Suck At Coding"
+theme = "book"
+themesDir = "themes"
+Booktheme = "dark"
+staticDir="static"

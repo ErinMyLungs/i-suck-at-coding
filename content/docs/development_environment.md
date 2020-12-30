@@ -7,7 +7,7 @@
 **This is a 2 part series:**
 1. Setting up live code execution in a live DPG program (You are here)
 2. [Set up a general development UI kit that can be re-used easily for each component and project]({{<relref development_module.md>}} "Dev Tool Module Link")
-
+-----
 
 Here we're going to set up a development environment that will allow dynamically execute code on the fly while your program is running. The biggest perk is that you can execute multiple commands on the fly to quickly test and iterate on your ideas without having to reload your program quite as frequently. 
 
@@ -38,7 +38,7 @@ The method and approach is very simple: we create a window with a text input tha
 
 ### Approach Diagram
 
-![Approach Diagram](/Live_Enu_Diag.png)
+![Approach Diagram](/development_environment/Live_Enu_Diag.png)
 
 {{</columns>}}
 
@@ -81,7 +81,7 @@ c.start_dearpygui()
 <--->
 ### Expected Result:
 
-![Window screenshot](/live_env_example_1.png)
+![Window screenshot](/development_environment/live_env_example_1.png)
 
 Okay big deal, we created a window with a text input.
 
@@ -119,7 +119,7 @@ with s.window(
 ````
 <--->
 ### Expected Result (Approximately): 
-![After live code execution](/live_code_execution_2.png)
+![After live code execution](/development_environment/live_code_execution_2.png)
 {{</columns>}}
 
 
@@ -155,7 +155,7 @@ Funny story - when committing these examples to github pylint auto-flagged exec 
 
 We have a project involving making an old-school digital clock style display and we're we're trying to get it to render numbers that look like:
 
-![A digital number 8](/more_complex_target.png)
+![A digital number 8](/development_environment/more_complex_target.png)
 
 We have created a 'Number' class and created a method called `draw_item` that lets us draw the shape on the canvas in the proper orientation but now that we can draw the shapes, we use the methods from above to play with this code and find coordinates to draw an 8.
 
@@ -190,7 +190,7 @@ Here we will utilize the methods:
 
 ### Approach Diagram
 
-![Number Class Diagram](/number_class.png)
+![Number Class Diagram](/development_environment/number_class.png)
 
 
 {{</columns>}}
@@ -258,7 +258,7 @@ def execute(self, *_args):
 
 With these changes you have the full code and on running you should see something like 
 <--->
-![example_screen](/command_canvas_example.png)
+![example_screen](/development_environment/command_canvas_example.png)
 {{</columns>}}
 
 By making execute a class method, we can now directly access the self instance.
@@ -273,7 +273,7 @@ self.color=[255,255,255] # update color value
 self.draw_item() # draw shape
 ```
 <--->
-![changing color](/changing_color.png)
+![changing color](/development_environment/changing_color.png)
 {{</columns>}}
 
 {{<columns>}} <!-- begin columns block -->
@@ -295,7 +295,7 @@ direction=Direction.center)
 
 ```
 <--->
-![multi line offset example](/multi_line_example.png)
+![multi line offset example](/development_environment/multi_line_example.png)
 {{</columns>}}
 
 {{<columns>}}<!-- begin columns block -->
@@ -315,7 +315,7 @@ self.draw_item(self)
 
 This is tougher to do on the fly but you can define and redefine functions while you work.
 <--->
-![Redefine example](/redefine_function.png)
+![Redefine example](/development_environment/redefine_function.png)
 {{</columns>}}
 
 ### Going Further

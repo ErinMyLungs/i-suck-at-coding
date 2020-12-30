@@ -3,5 +3,14 @@ languageCode = "en-us"
 title = "I Suck At Coding"
 theme = "book"
 themesDir = "themes"
-Booktheme = "dark"
+[markup]
+[markup.goldmark.renderer]
+  unsafe = true
+
+[markup.tableOfContents]
+  startLevel = 1
+[params]
+BookTheme = "dark"
 staticDir="static"
+BookSection="docs"
+BookMenuBundle="/menu"

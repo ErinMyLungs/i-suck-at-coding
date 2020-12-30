@@ -5,7 +5,7 @@
 ## Overview
 
 **This is a 2 part series:**
-1. Setting up live code execution in a live DPG program ( You are here)
+1. Setting up live code execution in a live DPG program (You are here)
 2. [Set up a general development UI kit that can be re-used easily for each component and project]({{<relref development_module.md>}} "Dev Tool Module Link")
 
 

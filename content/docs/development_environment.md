@@ -209,16 +209,26 @@ def run(self):
         y_pos=0,
     )
     with s.window("Drawing", **window_args):
-        c.add_drawing(self.name, width=90, height=150, )
+        c.add_drawing(
+            self.name,
+            width=90,
+            height=150,
+        )
 
-    with s.window("command##window", autosize=True,
-                   y_pos=200, x_pos=0):
-        c.add_input_text(name="command##input",
-                         width=600,
-                         height=300,
-                         multiline=True,
-                         on_enter=True,
-                         callback=self.execute)
+    with s.window(
+        "command##window",
+        autosize=True,
+        y_pos=200,
+        x_pos=0,
+    ):
+        c.add_input_text(
+            name="command##input",
+            width=600,
+            height=300,
+            multiline=True,
+            on_enter=True,
+            callback=self.execute,
+        )
 
     c.start_dearpygui()
 ```
@@ -234,9 +244,12 @@ def run(self):
         y_pos=0,
     )
     with s.window("Drawing", **window_args):
-        c.add_drawing(self.name, width=90, height=150, )
+        c.add_drawing(
+            self.name,
+            width=90,
+            height=150,
+        )
 
-    c.start_dearpygui()
 ```
 {{</columns>}}
 

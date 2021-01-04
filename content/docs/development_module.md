@@ -98,3 +98,42 @@ I also find it much easier to track where things come from.
 {{</hint>}}
 
 Okay that's super basic, let's add a logger window.
+
+### Adding Logger
+
+{{<columns>}}<!-- begin columns block -->
+#### Create Logger Window
+
+Here we define window configuration. You can do a `s.show_logger()` but by defining our own window we have a 
+
+<--->
+```python
+    def logger_window(self):
+        """
+        Creating our logger window
+        """
+        with s.window(
+            name=self.logger.replace("_", " ").title()
+            + "##window",
+            width=500,
+            height=500,
+            x_pos=500,
+            y_pos=350,
+            no_scrollbar=True,
+        ):
+            c.add_logger(
+                name=self.logger,
+                autosize_x=True,
+                autosize_y=True,
+            )
+
+    def init_windows(self):
+        """
+        Creates and arranges our windows for the kit
+        """
+        self.logger_window()
+        c.set_main_window_size(1000, 850)
+        c.set_main_window_pos(x=280, y=0)
+
+```
+{{</columns>}}

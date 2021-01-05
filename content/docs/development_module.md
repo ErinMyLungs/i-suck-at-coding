@@ -687,6 +687,8 @@ if __name__ == "__main__":
 ## A More Complex Example
 Here we show a more complex example applied to a component called `ExampleComponent` that has a table of x/y data, menus, user data input, and a scatter plot with built-in padding.
 
+![Result](/development_module/example_component_full.png)
+
 {{<details "Example Component Full Code">}}
 ```python
 """

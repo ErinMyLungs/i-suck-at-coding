@@ -315,6 +315,10 @@ def echo_scream(string_to_echo, scream=True):
 ```
 This will log all the args, kwargs, and return result into the logger.
 
-
-
+#### Expected Output
+![Decorator output example](/development_module/decorator_example.png)
 {{</columns>}}
+
+### Adding Execution Window
+
+For a more in-depth dive, check out [the previous write-up]({{<relref development_environment.md>}}).

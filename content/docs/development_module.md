@@ -18,7 +18,9 @@ We're going to keep it simple and small:
 2. A logger with convenience methods
 3. A Debugger Window
 
-This is meant to be modular and easy to hack on so that we can build quick windows and functions without having to build up the basics each time. 
+This is meant to be modular and easy to hack on so that we can build quick windows and functions without having to build up the basics each time.
+
+Even better this means that every tweak and improvement we add will be available in future projects too! 
 <--->
 ![Dev Kit Diagram](/development_module/kit_diagram.png)
 {{</columns>}}
@@ -34,23 +36,6 @@ The components we need are:
 
 Let's Define Our Class:
 {{<columns>}}<!-- begin columns block -->
-### Dev Kit Class
-
-Here we do these steps:
-1. Define our `__init__` method
-   * the `logger` var will define the logger name
-2. Create an `init_windows` method
-   * This creates all windows and updates main window params
-3. Create a `run` method
-   * I tend to make run be a simple initialize all windows and start DPG
-
-#### This is how I structure all my UI components in DPG:
-* `__init__` with any state variables that I want to consistently track
-* `init_windows` to create all defined windows in the component
-* `run` method that allows running just that component solo
-
-In general this seems to work pretty well and I follow this pattern frequently.
-<--->
 ```python
 import dearpygui.core as c
 import dearpygui.simple as s
@@ -79,6 +64,23 @@ dev = DevKit("An Example Logger")
 if __name__ == "__main__":
     dev.run()
 ```
+<--->
+### Dev Kit Class
+
+Here we do these steps:
+1. Define our `__init__` method
+   * the `logger` var will define the logger name
+2. Create an `init_windows` method
+   * This creates all windows and updates main window params
+3. Create a `run` method
+   * I tend to make run be a simple initialize all windows and start DPG
+
+#### This is how I structure all my UI components in DPG:
+* `__init__` with any state variables that I want to consistently track
+* `init_windows` to create all defined windows in the component
+* `run` method that allows running just that component solo
+
+In general this seems to work pretty well and I follow this pattern frequently.
 {{</columns>}}
 {{<hint info>}}
 **Importing dearpygui and star imports**
@@ -689,6 +691,93 @@ Here we show a more complex example applied to a component called `ExampleCompon
 
 ![Result](/development_module/example_component_full.png)
 
+### Quick Overview of Component
+
+There is a lot here but it's generally pretty straight-forward. Full code is available at the [end of the page]({{<relref "development_module.md#example-component-full-code">}} "Here").
+
+This defines the following pieces:
+
+* A window called "Example Component"
+* A menu with two options
+  * One option creates a new window and adds a row to the table
+  * One option resets the data to a default state
+    * `reset_data` showcases the `@dev.log_all` decorator
+* A table
+* A plot with a scatter series
+  * `recalculate_plot_limits` is used to showcase the `@dev.log_return` decorator
+
+If you run this component with the dev kit, you should see the above image and when you add a row or reset data you will see the functions log when they are called.
+
+Few notes:
+
+In the `update_data` function it has a `dev.log_debug("Called update data")` as a manual log. This isn't a great use of the logging function but generally this is useful for adding flags during specific steps of your functions or logging the state of a variable as a given time. 
+
+
+### Let's Talk Scope
+
+If we look at the code under our `__main__` statement:
+{{<columns>}}<!--begin columns block -->
+```python
+ex = ExampleComponent()
+
+INTERNAL_SCOPE = True
+if INTERNAL_SCOPE is True:
+    """
+    Here we set the execution command
+    to be the internal execute command
+    we defined in ExampleComponent.
+
+    We can execute commands using self
+    instead of ex
+    """
+    dev.init_windows(external_exec_command=ex.execute)
+else:
+    """
+    if we set the execution command here
+    we could access the ExampleComponent
+    as the ex variable instead of as self.
+    Good for multi-component debugging
+    """
+    execute = lambda *args: exec(dev.command)
+    dev.init_windows(external_exec_command=execute)
+
+ex.run()
+```
+<--->
+
+You can quickly test with this by flipping the `INTERNAL_SCOPE` bool to see how it affects your command window.
+
+Scope can be a very complex subject. I highly recommend [Fluent Python](https://www.oreilly.com/library/view/fluent-python/9781491946237/) as an excellent resource for more advanced topics in python like scope and decorators. 
+
+#### Internal Scope
+When this is true, we can directly manipulate the ExampleComponent using `self`. This is because the external_exec_command is defined as a class attribute. Note that we define this as a class attribute and not an instance attribute (a variable defined in `__init__`) which has some specific implications we won't talk about until a later write-up.
+
+You can call `self.add_data_option("sender", "data")` and you will see the input window launch as if you clicked the menu option.
+
+#### External Scope
+With this our execution command is outside the `ExampleComponent` so we can manipulate it from the variable we assign it to (`ex` here).
+
+So we can call `ex.add_data_option('sender', 'data')` and you'll get the same result as before.
+
+{{</columns>}}
+
+Now if we just did
+```python
+ex = ExampleComponent()
+dev.init_windows()
+ex.run()
+```
+The loggers still work just fine but now you only have access to the DevKit class (so logging functions) and pretty much most DPG commands.
+
+If you are mostly adjusting and debugging DPG code and not debugging your internal python code.
+
+For example we cannot run `ex.add_data_option` or `self.add_data_option` but we can do `self.log(c.get_windows())` and it'll give us all the window names as we expect. 
+
+{{<hint info>}}
+**Pro-tip**
+You should totally write `exit()` into your command console. 
+{{</hint>}}
+### Example Component Full Code
 {{<details "Example Component Full Code">}}
 ```python
 """
@@ -697,7 +786,8 @@ Shows using the dev kit on class-based GUI components
 import dearpygui.core as c
 import dearpygui.simple as s
 from development_tool_kit import dev
-
+# Note we are importing dev which 
+# is just DevKit("An Example Logger")!
 
 class ExampleComponent:
     """
@@ -932,3 +1022,20 @@ if __name__ == "__main__":
     ex.run()
 ```
 {{</details>}}
+
+## Conclusion and Wrap-up
+
+I know this has been a long one, you're almost done! The biggest thing I'd emphasize is that this is something I built up over a few weeks and for the more complicated pieces like the decorators I spent a while reading and testing things until I got it working.
+
+{{<columns>}} <!-- begin columns block-->
+Try not to feel overwhelmed, you don't need to build this in one go. This is so if you ever build a tool to solve some problem and run into it again you have it immediately available. And because it's reusable it means that instead of hacking together some quick tool to just get the job done you can spend a little time polishing the one you have and next time it's even better than before!
+
+For example I made this quick thing to dump window locations into the logger.  
+
+If I ever need this again, I can just add it into the DevKit and it's ready to go. Instead of spending 10 minutes rebuilding this, I can just focus on the actual issue or spend that time improving what is already there.
+<--->
+#### A random tool I made
+![Location window](/development_module/location_debug_example.png)
+{{</columns>}}
+
+Remember the goal here is to empower you to solve the problems you care about faster and make your life easier! Beg, borrow, and steal what furthers that goal and ignore the rest. Good luck!
